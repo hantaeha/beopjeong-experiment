@@ -25,6 +25,7 @@ if "conversation_id" not in st.session_state:
 
 st.title("💬 실험 A ")
 st.caption("본 대화는 총 5회의 질의응답으로 진행됩니다.")
+st.caption("첫째로 건네는 대화는 반드시 실험 A와 동일해야 합니다.")
 
 # 지난 대화 출력
 for msg in st.session_state.messages:

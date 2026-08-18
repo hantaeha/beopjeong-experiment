@@ -57,7 +57,7 @@ else:
         }
 
         with st.chat_message("assistant"):
-            with st.spinner(" "):
+            with st.spinner("💭"):
                 try:
                     res = requests.post(DIFY_API_URL, headers=headers, json=payload)
                     if res.status_code == 200:

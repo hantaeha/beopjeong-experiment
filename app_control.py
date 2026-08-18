@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="AI 대화 실험 - 그룹 B", page_icon="💬", layout="centered")
+st.set_page_config(page_title="대화 B", page_icon="💬", layout="centered")
 
 # Streamlit Secrets에서 대조군 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_CONTROL"]
@@ -9,7 +9,14 @@ DIFY_API_URL = "https://api.dify.ai/v1/chat-messages"
 MAX_TURNS = 5  # 5턴 제한
 
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [
+        {
+            "role":"assistant"
+            "content":"""안녕하세요! 당신의 상담 챗봇입니다.
+            이곳에서는 온전히 당신의 속마음을 나누실 수 있어요.
+            편하게 말을 걸어주세요. 어떤 이야기를 나누고 싶으신가요?"""
+        }
+    ]
 if "turn_count" not in st.session_state:
     st.session_state.turn_count = 0
 if "conversation_id" not in st.session_state:

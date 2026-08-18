@@ -6,7 +6,7 @@ st.set_page_config(page_title="실험 B", page_icon="💬", layout="centered")
 # Streamlit Secrets에서 대조군 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_CONTROL"]
 DIFY_API_URL = "https://api.dify.ai/v1/chat-messages"
-MAX_TURNS = 5  # 5턴 제한
+MAX_TURNS = 3  # 3턴 제한
 
 if "messages" not in st.session_state:
     st.session_state.messages = [
@@ -23,7 +23,7 @@ if "conversation_id" not in st.session_state:
     st.session_state.conversation_id = ""
 
 st.title("💬 실험 B")
-st.caption("본 실험은 총 5회의 대화로 진행됩니다.")
+st.caption("본 실험은 총 3회의 대화로 진행됩니다.")
 st.caption("단, 첫 번째로 시작하는 대화 내용은 실험 A와 동일해야 합니다.")
 
 for msg in st.session_state.messages:

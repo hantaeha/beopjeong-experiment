@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="AI 대화 실험 - 그룹 A", page_icon="💬", layout="centered")
+st.set_page_config(page_title="대화 A", page_icon="💬", layout="centered")
 
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]
@@ -16,7 +16,7 @@ if "turn_count" not in st.session_state:
 if "conversation_id" not in st.session_state:
     st.session_state.conversation_id = ""
 
-st.title("💬 AI 대화 안내 (그룹 A)")
+st.title("💬 대화 A ")
 st.caption("본 대화는 총 5회의 질의응답으로 진행됩니다.")
 
 # 지난 대화 출력

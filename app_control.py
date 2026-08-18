@@ -12,7 +12,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role":"assistant",
-            "content":"""안녕하세요! 당신의 상담 챗봇입니다.
+            "content":"""안녕하세요. 당신의 상담 챗봇입니다.
             이곳에서는 온전히 당신의 속마음을 나누실 수 있어요.
             편하게 말을 걸어주세요. 어떤 이야기를 나누고 싶으신가요?"""
         }

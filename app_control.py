@@ -22,7 +22,7 @@ if "turn_count" not in st.session_state:
 if "conversation_id" not in st.session_state:
     st.session_state.conversation_id = ""
 
-st.title("💬 AI 대화 안내 (그룹 B)")
+st.title("💬 대화 B")
 st.caption("본 대화는 총 5회의 질의응답으로 진행됩니다.")
 
 for msg in st.session_state.messages:

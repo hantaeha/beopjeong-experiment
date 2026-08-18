@@ -30,7 +30,7 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
 
 if st.session_state.turn_count >= MAX_TURNS:
-    st.success("🎉 실험 B에서의 대화가 완료되었습니다. 기존 실험 링크에서 설문을 진행해주세요.")
+    st.success("🎉 실험 B에서의 대화가 완료되었습니다. 기존 실험 링크에서 설문을 진행해 주세요.")
     #st.info("아래 버튼을 눌러 사후 설문조사를 완료해 주세요.")
     # 그룹 B 전용 설문지 링크
     #st.link_button("👉 그룹 B 사후 설문조사 작성하기", "https://forms.google.com/YOUR_FORM_URL_GROUP_B")

@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="대화 B", page_icon="💬", layout="centered")
+st.set_page_config(page_title="실험 B", page_icon="💬", layout="centered")
 
 # Streamlit Secrets에서 대조군 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_CONTROL"]
@@ -22,7 +22,7 @@ if "turn_count" not in st.session_state:
 if "conversation_id" not in st.session_state:
     st.session_state.conversation_id = ""
 
-st.title("💬 대화 B")
+st.title("💬 실험 B")
 st.caption("본 대화는 총 5회의 질의응답으로 진행됩니다.")
 
 for msg in st.session_state.messages:
@@ -30,7 +30,7 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
 
 if st.session_state.turn_count >= MAX_TURNS:
-    st.success("🎉 총 5회의 대화가 완료되었습니다. 기존 실험 링크에서 설문을 완료해주세요.")
+    st.success("🎉 실험 B에서의 대화가 완료되었습니다. 기존 실험 링크에서 설문을 진행해주세요.")
     #st.info("아래 버튼을 눌러 사후 설문조사를 완료해 주세요.")
     # 그룹 B 전용 설문지 링크
     #st.link_button("👉 그룹 B 사후 설문조사 작성하기", "https://forms.google.com/YOUR_FORM_URL_GROUP_B")

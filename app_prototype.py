@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="대화 A", page_icon="💬", layout="centered")
+st.set_page_config(page_title="실험 A", page_icon="💬", layout="centered")
 
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]
@@ -23,7 +23,7 @@ if "turn_count" not in st.session_state:
 if "conversation_id" not in st.session_state:
     st.session_state.conversation_id = ""
 
-st.title("💬 대화 A ")
+st.title("💬 실험 A ")
 st.caption("본 대화는 총 5회의 질의응답으로 진행됩니다.")
 
 # 지난 대화 출력
@@ -33,10 +33,10 @@ for msg in st.session_state.messages:
 
 # 5턴 대화 제어
 if st.session_state.turn_count >= MAX_TURNS:
-    st.success("🎉 총 5회의 대화가 완료되었습니다.")
-    st.info("아래 버튼을 눌러 사후 설문조사를 완료해 주세요.")
+    st.success("🎉 실험 A에서의 대화가 완료되었습니다. 실험 메인 페이지에서 설문을 진행해 주세요.")
+    #st.info("아래 버튼을 눌러 사후 설문조사를 완료해 주세요.")
     # 그룹 A 전용 설문지 링크 (필요 시 구분값 추가)
-    st.link_button("👉 그룹 A 사후 설문조사 작성하기", "https://forms.google.com/YOUR_FORM_URL_GROUP_A")
+    #st.link_button("👉 그룹 A 사후 설문조사 작성하기", "https://forms.google.com/YOUR_FORM_URL_GROUP_A")
 
 else:
     remaining_turns = MAX_TURNS - st.session_state.turn_count
@@ -60,7 +60,7 @@ else:
         }
 
         with st.chat_message("assistant"):
-            with st.spinner("AI가 답변을 작성 중입니다..."):
+            with st.spinner("💭"):
                 try:
                     res = requests.post(DIFY_API_URL, headers=headers, json=payload)
                     if res.status_code == 200:

@@ -1,7 +1,16 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="실험 A", page_icon="💬", layout="centered")
+st.set_page_config(page_title="실험 A", 
+                   page_icon="💬",
+                   layout="centered",
+                   initial_sidebar_state="collapsed", # 사이드바 접기
+                   menu_items={
+                                'Get Help': None,
+                                'Report a bug': None,
+                                'About': None  # 햄버거 메뉴 내 주요 항목 제거
+                   }
+                  )
 
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]

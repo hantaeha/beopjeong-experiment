@@ -35,6 +35,13 @@ hide_footer_style = """
     
     /* 5. 우측 하단에 고정되는 플로팅 버튼 영역 전체 타겟팅 */
     aside[aria-label="Status"] {display: none !important;}
+
+    .css-1jc7ptx, .e1ewe7hr3, .viewerBadge_container__1QSob,
+    .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137,
+    .viewerBadge_text__1JaDK {
+    display: none;
+    }
+    
     </style>
 """
 

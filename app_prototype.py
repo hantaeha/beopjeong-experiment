@@ -12,18 +12,33 @@ st.set_page_config(page_title="실험 A",
                    }
                   )
 
-# Custom CSS 주입 (Fork 버튼, Header, Footer, Streamlit 로고 숨기기)
-hide_streamlit_style = """
-            <style>
-            #MainMenu {visibility: hidden;}            /* 상단 우측 햄버거 메뉴 숨기기 */
-            header {visibility: hidden;}               /* 상단 헤더 및 Fork 버튼 숨기기 */
-            footer {visibility: hidden;}               /* 하단 'Hosted with Streamlit' 푸터 숨기기 */
-            .stAppHeader {display: none;}              /* 최신 Streamlit 상단 바 숨기기 */
-            .viewerBadge_container__1S-5D {display: none !important;} /* Hosted by 배지 숨기기 */
-            .styles_viewerBadge__1y-o5 {display: none !important;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+# Custom CSS: 우측 하단 View Profile, Streamlit 로고, Header, Footer 완벽 숨기기
+hide_all_streamlit_elements = """
+    <style>
+    /* 1. 상단 헤더, 햄버거 메뉴, Fork 버튼 숨기기 */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    .stAppHeader {display: none !important;}
+    
+    /* 2. 하단 기본 푸터(Hosted with Streamlit) 숨기기 */
+    footer {visibility: hidden;}
+    
+    /* 3. 우측 하단 View Profile 팝업 카드 및 Streamlit 배지 완벽 제거 */
+    .viewerBadge_container__1S-5D {display: none !important;}
+    .viewerBadge_link__1S-5D {display: none !important;}
+    div[data-testid="stStatusWidget"] {display: none !important;}
+    
+    /* Streamlit Cloud 호스팅 전용 뱃지/프로필 워터마크 클래스 타겟팅 */
+    [data-testid="stActionButtonIcon"] {display: none !important;}
+    [class*="viewerBadge"] {display: none !important;}
+    [class*="profile"] {display: none !important;}
+    
+    /* 4. 화면 맨 아래 여백 깔끔하게 정리 */
+    .stApp > footer {display: none !important;}
+    </style>
+"""
+
+st.markdown(hide_all_streamlit_elements, unsafe_allow_html=True)
 
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]

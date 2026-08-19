@@ -12,33 +12,45 @@ st.set_page_config(page_title="실험 A",
                    }
                   )
 
-# 최신 Streamlit Cloud 배지 및 프로필 강제 숨기기 통합 CSS
-hide_footer_style = """
+# ==========================================
+# 에러 없이 우측 하단 배지 및 프로필 숨기기 (CSS)
+# ==========================================
+st.markdown("""
     <style>
     /* 1. 상단 메뉴, 헤더, Fork 버튼 제거 */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    .stAppHeader {display: none !important;}
-    
-    /* 2. 기본 푸터 및 상태 위젯 제거 */
-    footer {visibility: hidden;}
-    div[data-testid="stStatusWidget"] {display: none !important;}
-    
-    /* 3. 우측 하단 Streamlit 배지, Fork, View Profile 전체 컨테이너 강제 숨기기 */
-    div.stDeployButton {display: none !important;}
-    .stApp > div:nth-child(2) {display: none !important;}
-    
-    /* 4. 클래스명에 viewerBadge나 profile, streamlit이 포함된 모든 요소를 무조건 숨김 */
-    [class*="viewerBadge"] {display: none !important; opacity: 0; pointer-events: none;}
-    [class*="profile"] {display: none !important; opacity: 0; pointer-events: none;}
-    [class*="st-emotion-cache"] iframe {display: none !important;}
-    
-    /* 5. 우측 하단에 고정되는 플로팅 버튼 영역 전체 타겟팅 */
-    aside[aria-label="Status"] {display: none !important;}
-    </style>
-"""
+    #MainMenu, header, footer, .stAppHeader {
+        display: none !important;
+        visibility: hidden !important;
+    }
 
-st.markdown(hide_footer_style, unsafe_allow_html=True)
+    /* 2. 우측 하단 Streamlit 배지, View Profile 팝업 플로팅 레이어 완전 숨김 */
+    .stDeployButton, 
+    div[data-testid="stStatusWidget"],
+    [data-testid="stActionButtonIcon"],
+    aside[aria-label="Status"],
+    .viewerBadge_container__1S-5D,
+    .viewerBadge_link__1S-5D {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    /* 3. 동적 생성 클래스 전체 하단 고정 박스 타겟팅 */
+    [class*="viewerBadge"],
+    [class*="profile"],
+    [class*="st-emotion-cache-12fm3bf"],
+    [class*="st-emotion-cache-15hul6a"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    
+    /* 4. 우측 하단 플로팅 영역 포지션 숨김 */
+    div[style*="position: fixed"][style*="bottom"] {
+        display: none !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]

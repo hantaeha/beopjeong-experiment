@@ -12,6 +12,19 @@ st.set_page_config(page_title="실험 A",
                    }
                   )
 
+# Custom CSS 주입 (Fork 버튼, Header, Footer, Streamlit 로고 숨기기)
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}            /* 상단 우측 햄버거 메뉴 숨기기 */
+            header {visibility: hidden;}               /* 상단 헤더 및 Fork 버튼 숨기기 */
+            footer {visibility: hidden;}               /* 하단 'Hosted with Streamlit' 푸터 숨기기 */
+            .stAppHeader {display: none;}              /* 최신 Streamlit 상단 바 숨기기 */
+            .viewerBadge_container__1S-5D {display: none !important;} /* Hosted by 배지 숨기기 */
+            .styles_viewerBadge__1y-o5 {display: none !important;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]
 DIFY_API_URL = "https://api.dify.ai/v1/chat-messages"

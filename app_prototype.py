@@ -12,9 +12,7 @@ st.set_page_config(page_title="실험 A",
                    }
                   )
 
-# ==========================================
-# 에러 없이 우측 하단 배지 및 프로필 숨기기 (CSS)
-# ==========================================
+# 우측 하단 배지 영역을 배경색으로 덮어서 완벽히 가리는 CSS
 st.markdown("""
     <style>
     /* 1. 상단 메뉴, 헤더, Fork 버튼 제거 */
@@ -23,31 +21,17 @@ st.markdown("""
         visibility: hidden !important;
     }
 
-    /* 2. 우측 하단 Streamlit 배지, View Profile 팝업 플로팅 레이어 완전 숨김 */
-    .stDeployButton, 
-    div[data-testid="stStatusWidget"],
-    [data-testid="stActionButtonIcon"],
-    aside[aria-label="Status"],
-    .viewerBadge_container__1S-5D,
-    .viewerBadge_link__1S-5D {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
-
-    /* 3. 동적 생성 클래스 전체 하단 고정 박스 타겟팅 */
-    [class*="viewerBadge"],
-    [class*="profile"],
-    [class*="st-emotion-cache-12fm3bf"],
-    [class*="st-emotion-cache-15hul6a"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    
-    /* 4. 우측 하단 플로팅 영역 포지션 숨김 */
-    div[style*="position: fixed"][style*="bottom"] {
-        display: none !important;
+    /* 2. 우측 하단 구석 영역을 흰색(배경색) 블록으로 가리고 클릭 차단 */
+    .stAppViewContainer::after {
+        content: "";
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 160px;          /* 배지 가로 크기 커버 */
+        height: 50px;          /* 배지 세로 크기 커버 */
+        background-color: #FFFFFF; /* 앱 배경색과 동일하게 지정 */
+        z-index: 9999999;      /* 최상단 레이어로 올림 */
+        pointer-events: auto;  # 클릭 이벤트 흡수 (클릭 불가)
     }
     </style>
 """, unsafe_allow_html=True)

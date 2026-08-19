@@ -61,7 +61,7 @@ if "conversation_id" not in st.session_state:
 
 st.title("💬 실험 B")
 st.caption("본 실험은 총 3회의 대화로 진행됩니다.")
-st.caption("단, 시작하시려는 첫 번째 대화 내용은 실험 A와 동일해야 합니다.")
+st.caption("단, 첫 번째 대화는 실험 A와 동일하게 시작해야 합니다.")
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):

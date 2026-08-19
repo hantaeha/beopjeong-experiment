@@ -12,33 +12,50 @@ st.set_page_config(page_title="실험 A",
                    }
                   )
 
-# 최신 Streamlit Cloud 배지 및 프로필 강제 숨기기 통합 CSS
-hide_footer_style = """
+# ==========================================
+# 1. CSS + JS 강력 결합으로 하단 배지/프로필 완벽 제거
+# ==========================================
+hide_elements_script = """
     <style>
-    /* 1. 상단 메뉴, 헤더, Fork 버튼 제거 */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    .stAppHeader {display: none !important;}
-    
-    /* 2. 기본 푸터 및 상태 위젯 제거 */
-    footer {visibility: hidden;}
-    div[data-testid="stStatusWidget"] {display: none !important;}
-    
-    /* 3. 우측 하단 Streamlit 배지, Fork, View Profile 전체 컨테이너 강제 숨기기 */
-    div.stDeployButton {display: none !important;}
-    .stApp > div:nth-child(2) {display: none !important;}
-    
-    /* 4. 클래스명에 viewerBadge나 profile, streamlit이 포함된 모든 요소를 무조건 숨김 */
-    [class*="viewerBadge"] {display: none !important; opacity: 0; pointer-events: none;}
-    [class*="profile"] {display: none !important; opacity: 0; pointer-events: none;}
-    [class*="st-emotion-cache"] iframe {display: none !important;}
-    
-    /* 5. 우측 하단에 고정되는 플로팅 버튼 영역 전체 타겟팅 */
-    aside[aria-label="Status"] {display: none !important;}
+    /* CSS 기본 숨기기 */
+    #MainMenu, header, footer, .stAppHeader {
+        display: none !important;
+        visibility: hidden !important;
+    }
     </style>
+
+    <script>
+    // 페이지 로드 후 0.1초마다 지속적으로 우측 하단 배지 및 Profile 카드 삭제
+    const removeBadge = () => {
+        // 1. Shadow DOM 및 일반 DOM에서 배지/프로필 관련 요소 탐색
+        const badges = document.querySelectorAll('[class*="viewerBadge"], [class*="profile"], [data-testid="stStatusWidget"], .stDeployButton');
+        badges.forEach(el => el.remove());
+
+        // 2. 우측 하단 플로팅 컨테이너 강제 제거
+        const floatingContainers = document.querySelectorAll('div[style*="bottom: 0"], div[style*="bottom: 0px"], div[style*="z-index: 999999"]');
+        floatingContainers.forEach(container => {
+            if (container.innerText && (container.innerText.includes('View profile') || container.innerText.includes('Streamlit'))) {
+                container.remove();
+            }
+        });
+        
+        // 3. iFrame 내부 배지 접근 및 제거
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+            try {
+                const innerBadges = iframe.contentDocument.querySelectorAll('[class*="viewerBadge"]');
+                innerBadges.forEach(el => el.remove());
+            } catch(e) {}
+        });
+    };
+
+    // 100ms마다 실행하여 동적으로 생성되는 배지까지 무조건 삭제
+    setInterval(removeBadge, 100);
+    </script>
 """
 
-st.markdown(hide_footer_style, unsafe_allow_html=True)
+# HTML/JS 주입
+components.html(hide_elements_script, height=0, width=0)
 
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]

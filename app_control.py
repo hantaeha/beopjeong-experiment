@@ -1,7 +1,44 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="실험 B", page_icon="💬", layout="centered")
+st.set_page_config(page_title="실험 B",
+                   page_icon="💬",
+                   layout="centered",
+                   initial_sidebar_state="collapsed", # 사이드바 접기
+                   menu_items={
+                                'Get Help': None,
+                                'Report a bug': None,
+                                'About': None  # 햄버거 메뉴 내 주요 항목 제거
+                   }
+                  )
+
+# 최신 Streamlit Cloud 배지 및 프로필 강제 숨기기 통합 CSS
+hide_footer_style = """
+    <style>
+    /* 1. 상단 메뉴, 헤더, Fork 버튼 제거 */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    .stAppHeader {display: none !important;}
+    
+    /* 2. 기본 푸터 및 상태 위젯 제거 */
+    footer {visibility: hidden;}
+    div[data-testid="stStatusWidget"] {display: none !important;}
+    
+    /* 3. 우측 하단 Streamlit 배지, Fork, View Profile 전체 컨테이너 강제 숨기기 */
+    div.stDeployButton {display: none !important;}
+    .stApp > div:nth-child(2) {display: none !important;}
+    
+    /* 4. 클래스명에 viewerBadge나 profile, streamlit이 포함된 모든 요소를 무조건 숨김 */
+    [class*="viewerBadge"] {display: none !important; opacity: 0; pointer-events: none;}
+    [class*="profile"] {display: none !important; opacity: 0; pointer-events: none;}
+    [class*="st-emotion-cache"] iframe {display: none !important;}
+    
+    /* 5. 우측 하단에 고정되는 플로팅 버튼 영역 전체 타겟팅 */
+    aside[aria-label="Status"] {display: none !important;}
+    </style>
+"""
+
+st.markdown(hide_footer_style, unsafe_allow_html=True)
 
 # Streamlit Secrets에서 대조군 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_CONTROL"]

@@ -12,29 +12,33 @@ st.set_page_config(page_title="실험 A",
                    }
                   )
 
-# 우측 하단 배지 영역을 배경색으로 덮어서 완벽히 가리는 CSS
-st.markdown("""
+# 최신 Streamlit Cloud 배지 및 프로필 강제 숨기기 통합 CSS
+hide_footer_style = """
     <style>
     /* 1. 상단 메뉴, 헤더, Fork 버튼 제거 */
-    #MainMenu, header, footer, .stAppHeader {
-        display: none !important;
-        visibility: hidden !important;
-    }
-
-    /* 2. 우측 하단 구석 영역을 흰색(배경색) 블록으로 가리고 클릭 차단 */
-    .stAppViewContainer::after {
-        content: "";
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        width: 160px;          /* 배지 가로 크기 커버 */
-        height: 50px;          /* 배지 세로 크기 커버 */
-        background-color: #FFFFFF; /* 앱 배경색과 동일하게 지정 */
-        z-index: 9999999;      /* 최상단 레이어로 올림 */
-        pointer-events: auto;  # 클릭 이벤트 흡수 (클릭 불가)
-    }
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    .stAppHeader {display: none !important;}
+    
+    /* 2. 기본 푸터 및 상태 위젯 제거 */
+    footer {visibility: hidden;}
+    div[data-testid="stStatusWidget"] {display: none !important;}
+    
+    /* 3. 우측 하단 Streamlit 배지, Fork, View Profile 전체 컨테이너 강제 숨기기 */
+    div.stDeployButton {display: none !important;}
+    .stApp > div:nth-child(2) {display: none !important;}
+    
+    /* 4. 클래스명에 viewerBadge나 profile, streamlit이 포함된 모든 요소를 무조건 숨김 */
+    [class*="viewerBadge"] {display: none !important; opacity: 0; pointer-events: none;}
+    [class*="profile"] {display: none !important; opacity: 0; pointer-events: none;}
+    [class*="st-emotion-cache"] iframe {display: none !important;}
+    
+    /* 5. 우측 하단에 고정되는 플로팅 버튼 영역 전체 타겟팅 */
+    aside[aria-label="Status"] {display: none !important;}
     </style>
-""", unsafe_allow_html=True)
+"""
+
+st.markdown(hide_footer_style, unsafe_allow_html=True)
 
 # Streamlit Secrets에서 프로토타입 전용 API Key 로드
 DIFY_API_KEY = st.secrets["DIFY_API_KEY_PROTOTYPE"]

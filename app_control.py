@@ -38,13 +38,6 @@ hide_footer_style = """
     </style>
 """
 
-# Add custom CSS to hide the GitHub icon
-hide_github_icon = """
-#GithubIcon {
-  visibility: hidden;
-}
-"""
-
 st.markdown(hide_footer_style, unsafe_allow_html=True)
 
 # Streamlit Secrets에서 대조군 전용 API Key 로드

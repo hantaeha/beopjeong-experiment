@@ -13,10 +13,9 @@ jobs:
       - name: Send keep-alive pings to multiple apps
         run: |
           # 운영 중인 다양한 서비스 URL 리스트
-          urls=(
-            "https://kcar-scraper.streamlit.app" 
-            "https://maintenance-battle.streamlit.app"
-            "https://retro-game-center.streamlit.app"
+          urls=( 
+            "https://experiment-app-a.streamlit.app/"
+            "https://experiment-app-b.streamlit.app/"
           )
           for url in "${urls[@]}"; do
             curl -s $url > /dev/null

@@ -12,5 +12,5 @@ jobs:
     steps:
       - name: Ping Streamlit Apps
         run: |
-          curl -sS https://experiment-app-a.streamlit.app/ > /dev/null
-          curl -sS https://experiment-app-b.streamlit.app/ > /dev/null
+          curl -sS https://experiment-app-a.streamlit.app > /dev/null
+          curl -sS https://experiment-app-b.streamlit.app > /dev/null

@@ -1,20 +1,24 @@
-name: Streamlit Keep Alive
+# .github/workflows/awake_alive.yml
+name: Keep Streamlit Apps Awake
 
-on:   
-schedule:     
-  - cron: '0 0,12 * * *' # 12시간마다 자동 실행   
-  workflow_dispatch:      # 수동 실행 허용 
+on:
+  schedule:
+    - cron: '0 */12 * * *' # 12시간마다 주기적으로 실행
+  workflow_dispatch: # 수동 실행 가능
 
 jobs:
-  auto_commit:
-    runs-on: ubuntu-latest
-    permissions:
-    contents: write
-steps:       
-  - uses: actions/checkout@v4       
-  - name: Create empty commit         
-  run: |           
-    git config --local user.email "github-actions[bot]@users.noreply.github.com"           
-    git config --local user.name "github-actions[bot]"           
-    git commit --allow-empty -m "Keep alive: Prevent Streamlit sleep mode"           
-    git push
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send keep-alive pings to multiple apps
+        run: |
+          # 운영 중인 다양한 서비스 URL 리스트
+          urls=(
+            "https://kcar-scraper.streamlit.app" 
+            "https://maintenance-battle.streamlit.app"
+            "https://retro-game-center.streamlit.app"
+          )
+          for url in "${urls[@]}"; do
+            curl -s $url > /dev/null
+            echo "Successfully pinged: $url"
+          done

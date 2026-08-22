@@ -22,16 +22,18 @@ jobs:
           node -e "
           const puppeteer = require('puppeteer');
           (async () => {
-            const browser = await puppeteer.launch();
+            const browser = await puppeteer.launch({
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
             const page = await browser.newPage();
             
             console.log('Visiting App A...');
-            await page.goto('https://experiment-app-a.streamlit.app', {waitUntil: 'networkidle2'});
-            await page.waitForTimeout(3000);
+            await page.goto('https://experiment-app-a.streamlit.app/', {waitUntil: 'networkidle2'});
+            await new Promise(r => setTimeout(r, 5000));
             
             console.log('Visiting App B...');
-            await page.goto('https://experiment-app-b.streamlit.app', {waitUntil: 'networkidle2'});
-            await page.waitForTimeout(3000);
+            await page.goto('https://experiment-app-b.streamlit.app/', {waitUntil: 'networkidle2'});
+            await new Promise(r => setTimeout(r, 5000));
             
             await browser.close();
             console.log('Done!');

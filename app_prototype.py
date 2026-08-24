@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="실험 A", 
+st.set_page_config(page_title="법문 챗봇", 
                    page_icon="💬",
                    layout="centered",
                    initial_sidebar_state="collapsed", # 사이드바 접기
@@ -60,9 +60,9 @@ if "turn_count" not in st.session_state:
 if "conversation_id" not in st.session_state:
     st.session_state.conversation_id = ""
 
-st.title("💬 실험 A ")
-st.caption("본 실험은 총 3회의 대화로 진행됩니다.")
-st.caption("단, 첫 번째 메시지는 두 실험 모두 동일하게 시작해야 합니다.")
+st.title("💬 법문 챗봇 ")
+st.caption("본 대화는 총 3회로 진행됩니다.")
+#st.caption("단, 첫 번째 메시지는 두 실험 모두 동일하게 시작해야 합니다.")
 
 # 지난 대화 출력
 for msg in st.session_state.messages:
@@ -71,7 +71,7 @@ for msg in st.session_state.messages:
 
 # 5턴 대화 제어
 if st.session_state.turn_count >= MAX_TURNS:
-    st.success("🎉 실험 A에서의 대화가 완료되었습니다. 실험 메인 페이지에서 설문을 진행해 주세요.")
+    st.success("🎉 대화가 완료되었습니다.")
     #st.info("아래 버튼을 눌러 사후 설문조사를 완료해 주세요.")
     # 그룹 A 전용 설문지 링크 (필요 시 구분값 추가)
     #st.link_button("👉 그룹 A 사후 설문조사 작성하기", "https://forms.google.com/YOUR_FORM_URL_GROUP_A")

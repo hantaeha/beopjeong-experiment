@@ -2,8 +2,12 @@ name: Keep Streamlit Alive
 
 on:
   schedule:
-    - cron: '0 */2 * * *' # 2시간마다 주기적으로 실행
-  workflow_dispatch: # 수동 실행 가능
+    # 2시간마다 자동 실행 (UTC 기준)
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
 jobs:
   ping:

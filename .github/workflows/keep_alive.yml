@@ -6,15 +6,19 @@ on:
     - cron: '0 */2 * * *'
   workflow_dispatch:
 
+# GitHub 공식 안내에 따른 Node 24 강제 적용 설정 (경고 문구 제거)
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4.2.2 # 최신 패치 버전을 지정하여 Node 20 경고 억제
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0 # 최신 패치 버전을 지정
+        uses: actions/setup-node@v4
         with:
           node-version: '24'
 
@@ -34,7 +38,7 @@ jobs:
             const page = await browser.newPage();
             
             // 본인의 Streamlit 앱 URL로 변경!
-            const targetUrl = 'https://experiment-app-a.streamlit.app'; 
+            const targetUrl = 'https://experiment-app-a.streamlit.app/'; 
             
             console.log(targetUrl + ' 에 접속합니다...');
             await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });

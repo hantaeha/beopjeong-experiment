@@ -34,7 +34,7 @@ jobs:
             const page = await browser.newPage();
             
             // 본인의 Streamlit 앱 URL로 변경하세요!
-            const targetUrl = 'https://experiment-app-a.streamlit.app/'; 
+            const targetUrl = 'https://experiment-app-a.streamlit.app'; 
             
             console.log(targetUrl + ' 에 접속합니다...');
             await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });

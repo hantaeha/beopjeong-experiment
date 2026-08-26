@@ -1,0 +1,49 @@
+name: Keep Streamlit Alive
+
+on:
+  schedule:
+    # 2시간마다 실행 (UTC 기준)
+    - cron: '0 */2 * * *'
+  # GitHub 웹사이트에서 수동으로 실행해볼 수 있는 버튼 생성
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Puppeteer
+        run: npm install puppeteer
+
+      - name: Run Keep-Alive Script
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+
+          (async () => {
+            console.log('브라우저를 실행합니다...');
+            const browser = await puppeteer.launch({
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            
+            // 본인의 Streamlit 앱 URL로 변경!
+            const targetUrl = 'https://experiment-app-a.streamlit.app/'; 
+            
+            console.log(targetUrl + ' 에 접속합니다...');
+            await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });
+            
+            console.log('웹소켓 세션 유지를 위해 15초간 대기합니다...');
+            await new Promise(r => setTimeout(r, 15000));
+            
+            console.log('성공적으로 앱을 활성화했습니다.');
+            await browser.close();
+          })();
+          "

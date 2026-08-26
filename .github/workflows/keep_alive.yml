@@ -4,7 +4,6 @@ on:
   schedule:
     # 2시간마다 실행 (UTC 기준)
     - cron: '0 */2 * * *'
-  # GitHub 웹사이트에서 수동으로 실행해볼 수 있는 버튼 생성
   workflow_dispatch:
 
 jobs:
@@ -17,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Install Puppeteer
         run: npm install puppeteer
@@ -34,7 +33,7 @@ jobs:
             });
             const page = await browser.newPage();
             
-            // 본인의 Streamlit 앱 URL로 변경!
+            // 본인의 Streamlit 앱 URL로 변경하세요!
             const targetUrl = 'https://experiment-app-a.streamlit.app/'; 
             
             console.log(targetUrl + ' 에 접속합니다...');

@@ -1,5 +1,11 @@
 import streamlit as st
 import requests
+import datetime
+
+# 서버 로그에 접속 시간 출력 (cron-job 요청 수신 확인용)
+print(
+    f"[{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Ping/Access Received"
+)
 
 st.set_page_config(page_title="법문 챗봇", 
                    page_icon="💬",

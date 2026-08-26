@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2 # 최신 패치 버전을 지정하여 Node 20 경고 억제
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v4.1.0 # 최신 패치 버전을 지정
         with:
           node-version: '24'
 
@@ -34,7 +34,7 @@ jobs:
             const page = await browser.newPage();
             
             // 본인의 Streamlit 앱 URL로 변경하세요!
-            const targetUrl = 'https://experiment-app-a.streamlit.app'; 
+            const targetUrl = 'https://your-streamlit-app.streamlit.app'; 
             
             console.log(targetUrl + ' 에 접속합니다...');
             await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });

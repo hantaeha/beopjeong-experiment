@@ -2,11 +2,10 @@ name: Keep Streamlit Alive
 
 on:
   schedule:
-    # 2시간마다 실행 (UTC 기준)
+    # 2시간마다 자동 실행 (UTC 기준)
     - cron: '0 */2 * * *'
   workflow_dispatch:
 
-# GitHub 공식 안내에 따른 Node 24 강제 적용 설정 (경고 문구 제거)
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
@@ -31,22 +30,51 @@ jobs:
           const puppeteer = require('puppeteer');
 
           (async () => {
-            console.log('브라우저를 실행합니다...');
+            console.log('가상 크롬 브라우저를 실행합니다...');
             const browser = await puppeteer.launch({
-              args: ['--no-sandbox', '--disable-setuid-sandbox']
+              headless: 'new',
+              args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-blink-features=AutomationControlled' // 자동화 브라우저 감지 우회
+              ]
             });
+
             const page = await browser.newPage();
+
+            // 일반 사용자 브라우저(User-Agent)로 위장하여 크롤러 차단 필터링 우회
+            await page.setUserAgent(
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+            );
+
+            // 데스크톱 화면 비율 설정
+            await page.setViewport({ width: 1280, height: 800 });
+
+            // 실제 서비스용 Streamlit 앱 URL 지정
+            const targetUrl = 'https://experiment-app-a.streamlit.app/';
+
+            console.log(targetUrl + ' 에 접속을 시도합니다...');
             
-            // 본인의 Streamlit 앱 URL로 변경!
-            const targetUrl = 'https://experiment-app-a.streamlit.app'; 
-            
-            console.log(targetUrl + ' 에 접속합니다...');
-            await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });
-            
-            console.log('웹소켓 세션 유지를 위해 15초간 대기합니다...');
-            await new Promise(r => setTimeout(r, 15000));
-            
-            console.log('성공적으로 앱을 활성화했습니다.');
-            await browser.close();
+            try {
+              // 1. 페이지 방문 및 네트워크 안정화 대기
+              await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });
+
+              // 2. Streamlit 화면 요소가 로딩될 때까지 대기
+              console.log('Streamlit 앱 화면 로딩 대기 중...');
+              await page.waitForSelector('[data-testid="stAppViewContainer"]', { timeout: 30000 }).catch(() => {
+                console.log('화면 요소 대기 타임아웃, 계속 진행합니다.');
+              });
+
+              // 3. Analytics 및 웹소켓 세션 등록을 위해 25초간 접속 유지
+              console.log('Streamlit Analytics 방문 로그 저장을 위해 25초간 대기합니다...');
+              await new Promise(r => setTimeout(r, 25000));
+
+              console.log('성공적으로 방문 로그를 전달하고 앱을 활성화했습니다.');
+            } catch (error) {
+              console.error('접속 중 오류 발생:', error);
+            } finally {
+              await browser.close();
+              console.log('브라우저를 정상적으로 종료했습니다.');
+            }
           })();
           "

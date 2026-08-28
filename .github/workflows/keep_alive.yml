@@ -1,15 +1,22 @@
 name: Keep Streamlit Alive
+
 on:
   schedule:
-    - cron: '0 */6 * * *' # 10시간마다 실행
+    - cron: '0 */6 * * *' # 6시간마다 실행
+  workflow_dispatch: # Actions 탭에서 수동 실행(테스트) 가능하게 설정
+
 jobs:
   ping:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 푸시 권한 부여
+      
     steps:
     - uses: actions/checkout@v4
+        
     - name: Keep Alive Commit
       run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'action@github.com'
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git commit --allow-empty -m "Keep Streamlit Awake"
         git push
